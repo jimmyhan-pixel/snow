@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SilverTask - Easy Services for Seniors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D5A27;
+            --primary-hover: #1E3D1A;
+            --text-dark: #1A1A1A;
+            --text-light: #5F6368;
+            --white: #FFFFFF;
+            --border: #DFE1E5;
+            --border-hover: #C0C0C0;
+            --radius: 24px;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--white);
+            min-height: 100vh;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .logo-icon svg {
+            width: 44px;
+            height: 44px;
+            fill: var(--white);
+        }
+
+        .logo-text {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        /* Search Box */
+        .search-box {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 22px 60px 22px 56px;
+            font-size: 20px;
+            font-family: inherit;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--white);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+        .search-input:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.15);
+        }
+
+        .search-input::placeholder {
+            color: #9AA0A6;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--text-light);
+        }
+
+        /* Button */
+        .btn-primary {
+            padding: 20px 48px;
+            font-size: 22px;
+            font-weight: 700;
+            font-family: inherit;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(45, 90, 39, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer hint */
+        .footer-hint {
+            margin-top: 48px;
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 32px;
+            }
+
+            .search-input {
+                padding: 18px 50px 18px 48px;
+                font-size: 18px;
+            }
+
+            .btn-primary {
+                width: 100%;
+                padding: 18px 32px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
+            </div>
+            <div class="logo-text">SilverTask</div>
+            <p class="tagline">Easy Services for Seniors</p>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">📍</span>
+            <input type="text" id="address" class="search-input" placeholder="Enter your address"
+                autocomplete="street-address">
+        </div>
+
+        <!-- Button -->
+        <button class="btn-primary" onclick="goToNextPage()">
+            ❄️ Snow Removal
+        </button>
+
+        <!-- Footer hint -->
+        <p class="footer-hint">Find help with snow removal near you</p>
+    </div>
+
+    <script type="module">
+        import { loadGoogleMapsScript, getCoordinates, isConfigured } from './js/google-maps.js';
+
+        // Load Maps API on page load (only if configured, to prevent console errors in demo mode)
+        if (isConfigured()) {
+            loadGoogleMapsScript(() => {
+                console.log('Google Maps API Loaded');
+            });
+        }
+
+        // Expose to global scope for HTML onclick
+        window.goToNextPage = async function () {
+            const addressInput = document.getElementById('address');
+            const address = addressInput.value;
+            const btn = document.querySelector('.btn-primary');
+
+            if (!address) {
+                alert('Please enter your address');
+                addressInput.focus();
+                return;
+            }
+
+            // Show loading state
+            const originalText = btn.innerText;
+            btn.innerText = '📍 Locating...';
+            btn.disabled = true;
+
+            try {
+                let locationData = null;
+
+                // Only try geocoding if configured properly
+                if (isConfigured()) {
+                    try {
+                        locationData = await getCoordinates(address);
+                    } catch (e) {
+                        console.warn("Geocoding step failed:", e);
+                        // Fallback to null, which enters the demo block below
+                    }
+                }
+
+                // Fallback to mock data if geocoding didn't happen or failed
+                if (!locationData) {
+                    // Only alert if the user might expect it to work (bad key)
+                    // If no key is set (default), we just silently proceed with demo mode
+                    if (isConfigured()) {
+                        alert("Maps API error. Proceeding with demo location (New York).");
+                    }
+
+                    locationData = {
+                        lat: 40.7128,
+                        lng: -74.0060,
+                        formattedAddress: address
+                    };
+                }
+
+                console.log("Location found:", locationData);
+
+                // Save to localStorage
+                localStorage.setItem('silverTask', JSON.stringify({
+                    address: locationData.formattedAddress,
+                    lat: locationData.lat,
+                    lng: locationData.lng,
+                    service: 'snow'
+                }));
+
+                // Navigate to next page
+                window.location.href = 'providers.html';
+
+            } catch (err) {
+                console.error(err);
+                alert('Could not process request. Please try again.');
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        // Allow Enter key to submit
+        document.getElementById('address').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                window.goToNextPage();
+            }
+        });
+    </script>
+</body>
+
+</html>
