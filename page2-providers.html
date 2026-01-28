@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SilverTask - Choose a Provider</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D5A27;
+            --primary-hover: #1E3D1A;
+            --secondary: #F5F0E8;
+            --text-dark: #1A1A1A;
+            --text-light: #4A4A4A;
+            --white: #FFFFFF;
+            --border: #D4D4D4;
+            --gold: #F5A623;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: linear-gradient(180deg, #F5F0E8 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .back-btn {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            border: 3px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: rgba(45, 90, 39, 0.05);
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .header-title p {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        /* Progress */
+        .progress {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .progress-step {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .progress-step.completed {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .progress-step.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+        }
+
+        .progress-step.inactive {
+            background: var(--border);
+            color: var(--text-light);
+        }
+
+        .progress-line {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            align-self: center;
+            border-radius: 2px;
+        }
+
+        .progress-line.completed {
+            background: var(--primary);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        /* Provider Cards */
+        .provider-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .provider-card {
+            background: var(--white);
+            border: 3px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .provider-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .provider-header {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .provider-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+        }
+
+        .provider-info {
+            flex: 1;
+        }
+
+        .provider-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .provider-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(45, 90, 39, 0.1);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .provider-badge svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--primary);
+        }
+
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: var(--gold);
+            font-size: 22px;
+        }
+
+        .star.empty {
+            color: var(--border);
+        }
+
+        .rating-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .review-count {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        .provider-bio {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        .provider-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .provider-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .provider-price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .view-btn {
+            padding: 14px 28px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .provider-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .provider-footer {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .view-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">
+                <h1>SilverTask</h1>
+                <p>Easy Services for Seniors</p>
+            </div>
+        </header>
+
+        <!-- Progress -->
+        <div class="progress">
+            <div class="progress-step completed">✓</div>
+            <div class="progress-line completed"></div>
+            <div class="progress-step active">2</div>
+            <div class="progress-line"></div>
+            <div class="progress-step inactive">3</div>
+        </div>
+
+        <!-- Content -->
+        <main>
+            <h2 class="section-title">👥 Choose a Provider</h2>
+            <p class="section-subtitle">Here are service providers near you</p>
+
+            <div class="provider-list">
+                <!-- Provider 1 -->
+                <div class="provider-card" onclick="viewProvider(1)">
+                    <div class="provider-header">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Jake" class="provider-avatar">
+                        <div class="provider-info">
+                            <h3 class="provider-name">Jake Thompson</h3>
+                            <div class="provider-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified · Great with Seniors
+                            </div>
+                            <div class="provider-rating">
+                                <div class="stars">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <span class="rating-text">4.9</span>
+                                <span class="review-count">(127 reviews)</span>
+                            </div>
+                            <p class="provider-bio">College student, reliable and respectful with seniors</p>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">$28<span>/hour</span></div>
+                        <button class="view-btn">View Details →</button>
+                    </div>
+                </div>
+
+                <!-- Provider 2 -->
+                <div class="provider-card" onclick="viewProvider(2)">
+                    <div class="provider-header">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face" alt="Lisa" class="provider-avatar">
+                        <div class="provider-info">
+                            <h3 class="provider-name">Lisa Martinez</h3>
+                            <div class="provider-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified · Great with Seniors
+                            </div>
+                            <div class="provider-rating">
+                                <div class="stars">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <span class="rating-text">4.8</span>
+                                <span class="review-count">(89 reviews)</span>
+                            </div>
+                            <p class="provider-bio">Nursing student, caring and great at communicating with seniors</p>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">$32<span>/hour</span></div>
+                        <button class="view-btn">View Details →</button>
+                    </div>
+                </div>
+
+                <!-- Provider 3 -->
+                <div class="provider-card" onclick="viewProvider(3)">
+                    <div class="provider-header">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Mike" class="provider-avatar">
+                        <div class="provider-info">
+                            <h3 class="provider-name">Mike Johnson</h3>
+                            <div class="provider-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified · Great with Seniors
+                            </div>
+                            <div class="provider-rating">
+                                <div class="stars">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star empty">★</span>
+                                </div>
+                                <span class="rating-text">4.6</span>
+                                <span class="review-count">(56 reviews)</span>
+                            </div>
+                            <p class="provider-bio">Army veteran, strong and efficient, perfect for heavy lifting</p>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">$25<span>/hour</span></div>
+                        <button class="view-btn">View Details →</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = 'page1-address.html';
+        }
+
+        function viewProvider(id) {
+            localStorage.setItem('selectedProvider', id);
+            window.location.href = 'page3-provider-detail.html';
+        }
+    </script>
+</body>
+</html>
